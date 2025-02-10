@@ -14,7 +14,7 @@ function App() {
     if (!selectedFile) return;
     const formData = new FormData();
     formData.append('file', selectedFile);
-    const res = await fetch('http://localhost:5000/predict', {
+    const res = await fetch('https://sign-language-using-cnn-backend.onrender.com/predict', {
       method: 'POST',
       body: formData
     });
