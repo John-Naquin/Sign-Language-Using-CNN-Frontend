@@ -56,15 +56,15 @@ function App() {
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-2">
           <div className="p-2 bg-white shadow-md rounded-md w-40">
             <p className="font-bold">John Naquin</p>
-            <p className="text-sm text-gray-600">Coding/Writing</p>
+            <p className="text-sm text-gray-600">Coding, Researching, and Writing</p>
           </div>
           <div className="p-2 bg-white shadow-md rounded-md w-40">
             <p className="font-bold">Andy Mattick</p>
-            <p className="text-sm text-gray-600">Coding/Writing</p>
+            <p className="text-sm text-gray-600">Coding, Researching, and Writing</p>
           </div>
           <div className="p-2 bg-white shadow-md rounded-md w-40">
             <p className="font-bold">Heather Anderson</p>
-            <p className="text-sm text-gray-600">Coding/Writing</p>
+            <p className="text-sm text-gray-600">Coding, Researching, and Writing</p>
           </div>
         </div>
       </div>
