@@ -77,7 +77,7 @@ function App() {
             target="_blank" 
             className="text-blue-500 hover:underline"
           >
-            📜 Project Code
+            📜 Project Model Code
           </a>
           <a 
             href="https://github.com/John-Naquin/Sign-Language-Using-CNN-Frontend"
