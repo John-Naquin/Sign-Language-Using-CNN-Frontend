@@ -80,6 +80,20 @@ function App() {
             📜 Project Code
           </a>
           <a 
+            href="https://github.com/John-Naquin/Sign-Language-Using-CNN-Frontend"
+            target="_blank" 
+            className="text-blue-500 hover:underline"
+          >
+            📜 Project Code Frontend
+          </a>
+          <a 
+            href="https://github.com/John-Naquin/Sign-Language-Using-CNN-Backend"
+            target="_blank" 
+            className="text-blue-500 hover:underline"
+          >
+            📜 Project Code Backend
+          </a>
+          <a 
             href="" 
             target="_blank" 
             className="text-blue-500 hover:underline"
