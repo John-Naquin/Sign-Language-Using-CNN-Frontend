@@ -53,7 +53,7 @@ function App() {
 
       <div className="mt-10 w-full bg-gray-200 p-4 rounded-lg">
         <h2 className="text-lg font-semibold">Created by:</h2>
-        <div className="flex justify-center space-x-6 mt-2">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-2">
           <div className="p-2 bg-white shadow-md rounded-md w-40">
             <p className="font-bold">John Naquin</p>
             <p className="text-sm text-gray-600">Coding/Wirtting</p>
