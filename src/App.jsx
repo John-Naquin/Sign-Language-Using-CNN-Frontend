@@ -101,7 +101,7 @@ function App() {
             📄 Research Paper
           </a>
           <a 
-            href="https://www.kaggle.com/code/paultimothymooney/interpret-sign-language-with-deep-learning/notebook" 
+            href="https://www.kaggle.com/code/sayakdasgupta/sign-language-classification-cnn-99-40-accuracy/notebook" 
             target="_blank" 
             className="text-blue-500 hover:underline"
           >
