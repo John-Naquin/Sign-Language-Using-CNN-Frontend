@@ -9,6 +9,7 @@ function App() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   let intervalRef = useRef(null);
+  let timeoutRef = useRef(null);
 
   useEffect(() => {
     const checkMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -64,6 +65,11 @@ function App() {
         videoRef.current.setAttribute("muted", true);
       }
       intervalRef.current = setInterval(captureFrame, 500);
+
+      timeoutRef.current = setTimeout(() => {
+        stopVideo();
+        setUseLiveVideo(false);
+      }, 30000);
     } catch (error) {
       console.error("Error accessing webcam:", error);
     }
@@ -74,6 +80,7 @@ function App() {
       videoRef.current.srcObject.getTracks().forEach(track => track.stop());
     }
     clearInterval(intervalRef.current);
+    clearTimeout(timeoutRef.current);
     setPrediction("");
   };
 
@@ -105,11 +112,12 @@ function App() {
     <div className="min-h-screen bg-gray-50 flex flex-col items-center text-center p-6">
       <h1 className="text-2xl font-bold mb-4">Sign Language</h1>
 
-      {!isMobile && (
-        <button onClick={toggleVideoMode} className="mb-4 px-4 py-2 bg-green-500 text-white rounded">
-          {useLiveVideo ? "Switch to Image Upload" : "Switch to Live Video"}
-        </button>
-      )}
+      <button 
+        onClick={toggleVideoMode} 
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
+      >
+        {useLiveVideo ? "Switch to Image Upload" : "Switch to Live Video"}
+      </button>
 
       {!useLiveVideo ? (
         <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
@@ -126,6 +134,7 @@ function App() {
         <div className="flex flex-col items-center">
           <video ref={videoRef} autoPlay playsInline muted className="w-80 h-60 border" />
           <canvas ref={canvasRef} width="50" height="50" hidden />
+          <p className="text-sm text-red-500 mt-2">Camera turns off after 30 seconds</p>
         </div>
       )}
 
