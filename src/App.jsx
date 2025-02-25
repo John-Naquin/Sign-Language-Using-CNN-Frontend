@@ -5,9 +5,15 @@ function App() {
   const [prediction, setPrediction] = useState("");
   const [loading, setLoading] = useState(false);
   const [useLiveVideo, setUseLiveVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   let intervalRef = useRef(null);
+
+  useEffect(() => {
+    const checkMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    setIsMobile(checkMobile);
+  }, []);
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -25,7 +31,7 @@ function App() {
     formData.append("file", selectedFile);
 
     try {
-      const res = await fetch('https://sign-language-using-cnn-backend.onrender.com/predict', {
+      const res = await fetch("https://sign-language-using-cnn-backend.onrender.com/predict", {
         method: "POST",
         body: formData,
       });
@@ -51,8 +57,12 @@ function App() {
   const startVideo = async () => {
     setPrediction("");
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoRef.current.srcObject = stream;
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.setAttribute("playsinline", true);
+        videoRef.current.setAttribute("muted", true);
+      }
       intervalRef.current = setInterval(captureFrame, 500);
     } catch (error) {
       console.error("Error accessing webcam:", error);
@@ -95,12 +105,11 @@ function App() {
     <div className="min-h-screen bg-gray-50 flex flex-col items-center text-center p-6">
       <h1 className="text-2xl font-bold mb-4">Sign Language</h1>
 
-      <button 
-        onClick={toggleVideoMode} 
-        className="mb-4 px-4 py-2 bg-green-500 text-white rounded"
-      >
-        {useLiveVideo ? "Switch to Image Upload" : "Switch to Live Video"}
-      </button>
+      {!isMobile && (
+        <button onClick={toggleVideoMode} className="mb-4 px-4 py-2 bg-green-500 text-white rounded">
+          {useLiveVideo ? "Switch to Image Upload" : "Switch to Live Video"}
+        </button>
+      )}
 
       {!useLiveVideo ? (
         <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
@@ -115,7 +124,7 @@ function App() {
         </form>
       ) : (
         <div className="flex flex-col items-center">
-          <video ref={videoRef} autoPlay className="w-80 h-60 border" />
+          <video ref={videoRef} autoPlay playsInline muted className="w-80 h-60 border" />
           <canvas ref={canvasRef} width="50" height="50" hidden />
         </div>
       )}
@@ -144,24 +153,19 @@ function App() {
       <div className="mt-6 w-full bg-gray-200 p-4 rounded-lg">
         <h2 className="text-lg font-semibold">Links</h2>
         <div className="flex flex-col items-center mt-2 space-y-2">
-          <a href="https://colab.research.google.com/drive/17L05fD9TnHiXQEqRxX-_GVzSV7ckBAgy?usp=sharing" 
-             target="_blank" className="text-blue-500 hover:underline">
+          <a href="https://colab.research.google.com/drive/17L05fD9TnHiXQEqRxX-_GVzSV7ckBAgy?usp=sharing" target="_blank" className="text-blue-500 hover:underline">
             📜 Project Model Code
           </a>
-          <a href="https://github.com/John-Naquin/Sign-Language-Using-CNN-Frontend"
-             target="_blank" className="text-blue-500 hover:underline">
+          <a href="https://github.com/John-Naquin/Sign-Language-Using-CNN-Frontend" target="_blank" className="text-blue-500 hover:underline">
             📜 Project Frontend Code
           </a>
-          <a href="https://github.com/John-Naquin/Sign-Language-Using-CNN-Backend"
-             target="_blank" className="text-blue-500 hover:underline">
+          <a href="https://github.com/John-Naquin/Sign-Language-Using-CNN-Backend" target="_blank" className="text-blue-500 hover:underline">
             📜 Project Backend Code
           </a>
-          <a href="https://drive.google.com/file/d/1Vx_iG7MVuC_gE0j8P55KEwjpL0WGbEqR/view?usp=sharing" 
-             target="_blank" className="text-blue-500 hover:underline">
+          <a href="https://drive.google.com/file/d/1Vx_iG7MVuC_gE0j8P55KEwjpL0WGbEqR/view?usp=sharing" target="_blank" className="text-blue-500 hover:underline">
             📄 Research Paper
           </a>
-          <a href="https://www.kaggle.com/code/sayakdasgupta/sign-language-classification-cnn-99-40-accuracy/notebook" 
-             target="_blank" className="text-blue-500 hover:underline">
+          <a href="https://www.kaggle.com/code/sayakdasgupta/sign-language-classification-cnn-99-40-accuracy/notebook" target="_blank" className="text-blue-500 hover:underline">
             📊 Dataset Used
           </a>
         </div>
